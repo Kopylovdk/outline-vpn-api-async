@@ -1,7 +1,8 @@
+test.env
 venv/
 .idea/
 /build/
-/outline_vpn_api.egg-info/
+/*.egg-info/
 /dist/
 /.pytest_cache/
 /outline-install.log
