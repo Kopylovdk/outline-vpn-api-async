@@ -214,13 +214,15 @@ class OutlineVPN:
         ) as resp:
             return resp.status == 204
 
+    async def _close(self):
+        await self.session.close()
+
     def __del__(self):
         if self.session is None:
             return
         try:
             loop = asyncio.get_running_loop()
         except RuntimeError:
-            pass
-        else:
-            loop.create_task(self.session.close())
-            loop.create_task(asyncio.sleep(0.125))  # handles asyncio dead loop
+            asyncio.run(self._close())
+            return
+        loop.create_task(self._close())

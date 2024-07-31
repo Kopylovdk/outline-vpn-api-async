@@ -58,6 +58,16 @@ async def test_crud_key(client: OutlineVPN):
 
 
 @pytest.mark.asyncio
+async def test_get_single_key(client: OutlineVPN):
+    """Test getting a single key"""
+    new_key = await client.get_key(key_id=0)
+    assert new_key is not None
+    assert int(new_key.key_id) == 0
+
+    assert new_key.access_url is not None
+
+
+@pytest.mark.asyncio
 async def test_raise_on_missing_key_id(client: OutlineVPN):
     with pytest.raises(OutlineServerErrorException):
         await client.get_key(key_id=-1)
@@ -101,6 +111,7 @@ async def test_server_methods(client: OutlineVPN):
     assert await client.set_server_name(server_info.get("name"))
     assert await client.set_hostname(server_info.get("hostnameForAccessKeys"))
     assert await client.set_port_new_for_access_keys(server_info.get("portForNewAccessKeys"))
+
 
 @pytest.mark.asyncio
 async def test_metrics_status(client: OutlineVPN):

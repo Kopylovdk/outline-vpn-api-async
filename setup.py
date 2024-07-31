@@ -5,7 +5,7 @@ from setuptools import setup
 
 setup(
     name="outline-vpn-api-async",
-    version="0.0.2",
+    version="0.1.1",
     packages=["outline_vpn"],
     url="https://github.com/dogekiller21/outline-vpn-api-async",
     license="MIT",
