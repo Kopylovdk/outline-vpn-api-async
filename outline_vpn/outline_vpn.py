@@ -48,12 +48,16 @@ class OutlineVPN:
         return [OutlineKey.from_key_json(key_data) for key_data in response_data.get("accessKeys", [])]
 
     async def get_key(self, key_id: int) -> OutlineKey:
-        keys = await self.get_keys()
-        for key in keys:
-            if key.key_id == key_id:
-                return key
+        async with self.session.get(
+                url=f"{self.api_url}/access-keys/{key_id}"
+        ) as resp:
+            if resp.status != 200:
+                raise OutlineServerErrorException("Unable to retrieve keys")
+            client_data = OutlineKey.from_key_json(await resp.json())
+        current_metrics = await self._get_metrics()
 
-        raise OutlineServerErrorException(f"Unable to retrieve key with id {key_id}")
+        client_data.used_bytes = current_metrics.get("bytesTransferredByUserId").get(client_data.key_id)
+        return client_data
 
     async def _fulfill_keys_with_metrics(self, keys: list[OutlineKey]) -> list[OutlineKey]:
         current_metrics = await self._get_metrics()
