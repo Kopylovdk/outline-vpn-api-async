@@ -26,9 +26,14 @@ jobs:
         pip install pytest setuptools
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
-    - name: Test with pytest
+    - name: Test with pytest and collect coverage
       run: |
-        pytest
+        pytest --cov=outline_vpn tests/
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v4.0.1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+
 
   publish:
     runs-on: ubuntu-latest
