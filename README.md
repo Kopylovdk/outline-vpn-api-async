@@ -6,6 +6,8 @@ This is a fork of https://github.com/jadolg/outline-vpn-api
 
 [![Test](https://github.com/dogekiller21/outline-vpn-api-async/actions/workflows/test.yml/badge.svg)](https://github.com/dogekiller21/outline-vpn-api-async/actions/workflows/test.yml)
 
+[![Coverage](https://codecov.io/github/dogekiller21/outline-vpn-api-async/graph/badge.svg?token=CNS4KNY9MI)](https://codecov.io/github/dogekiller21/outline-vpn-api-async)
+
 ## How to use
 
 ```python
